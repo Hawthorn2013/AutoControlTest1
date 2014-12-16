@@ -3,6 +3,7 @@ clc;
 XZ_K=10;
 s = tf('s');
 G0=tf(XZ_K,conv([1,0],[1,1]));
+[G0_num,G0_den] = tfdata(G0,'v');
 Gama=45;%所需相位裕度
 GamaE=12;%补偿相位裕度
 w=logspace(-1,3);
@@ -21,7 +22,13 @@ Omiga1 = OmigaM*Aerfa^0.5;
 Omiga2 = OmigaM/Aerfa^0.5;
 Tao=1/Omiga1;
 Gc = (Tao*s+1)/(Tao*Aerfa*s+1);%超前矫正函数
+[Gc_num,Gc_den] = tfdata(Gc,'v');
+disp('矫正传递函数Gc(s)：');
+Gc
 G = G0*Gc;
+[G_num,G_den] = tfdata(G,'v');
+disp('矫正后传递函数G(s)：');
+G
 
 figure(1);
 hold on;
